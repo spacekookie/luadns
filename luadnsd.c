@@ -1,5 +1,8 @@
 
+
 #define _BSD_SOURCE
+#include "luadns.h"
+
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
@@ -673,7 +676,7 @@ void free_questions(struct Question* qq)
   }
 }
 
-int main()
+int luadns_start()
 {
   L = luaL_newstate();
   luaL_openlibs(L);

@@ -1,0 +1,2 @@
+
+int luadns_start();
