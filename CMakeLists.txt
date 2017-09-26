@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
-project(LuaDNSd)
+project(luadns)
 
+# TODO: Make this build prettier
 include_directories(/usr/include/luajit-2.0)
-add_executable(luadnsd luadnsd.c )
-target_link_libraries(luadnsd luajit-5.1)
+add_library(luadns luadnsd.c)
+target_link_libraries(luadns luajit-5.1)
+
+add_executable(luadnsd dnsd.c)
+target_link_libraries(luadnsd luadns)

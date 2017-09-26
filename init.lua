@@ -28,9 +28,9 @@ end
 function AAAAQuery(record,addr)
   print("Query for:",record)
   print("From:",addr)
-  if record=="my.ip" then
+  if record == "my.ip" then
   	print("faking...")
-  	return 0,0,0,0,0,0,0,0,0,0,255,255,unpack(map(tonumber,addr:split('.')))
+  	return 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, unpack(map(tonumber, addr:split('.')))
   end
-  return 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+  return 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
 end

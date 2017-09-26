@@ -676,11 +676,11 @@ void free_questions(struct Question* qq)
   }
 }
 
-int luadns_start()
+int luadns_start(const char *script)
 {
   L = luaL_newstate();
   luaL_openlibs(L);
-  if(luaL_dofile(L, "init.lua")){
+  if(luaL_dofile(L, script)){
     fprintf(stderr, "Couldn't load script: %s\n", lua_tostring(L, -1));
     lua_close(L);
     exit(1);
