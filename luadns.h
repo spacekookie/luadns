@@ -1,2 +1,6 @@
 
-int luadns_start();
+
+/**
+ *  
+ */
+int luadns_start(const char *script);
