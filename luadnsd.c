@@ -676,8 +676,17 @@ void free_questions(struct Question* qq)
   }
 }
 
+int easy_start()
+{
+  luadns_start("init.lua");
+  return 0;
+}
+
 int luadns_start(const char *script)
 {
+
+  printf("I'M ALIVE!\n");
+
   L = luaL_newstate();
   luaL_openlibs(L);
   if(luaL_dofile(L, script)){
