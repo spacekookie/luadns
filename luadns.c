@@ -1,10 +1,10 @@
 
 
-// #define _BSD_SOURCE
-// #include "luadns.h"
+#define _BSD_SOURCE
+#include "luadns.h"
 
-// #include <lua.h>
-// #include <lualib.h>
+#include <lua.h>
+#include <lualib.h>
 // #include <lauxlib.h>
 // #include <stdio.h>
 // #include <stdlib.h>
@@ -31,7 +31,7 @@
 // *  dig @127.0.0.1 -p 9000 foo.bar.com 
 // */
 
-// lua_State *L;
+lua_State *L;
 
 
 // /*
@@ -676,11 +676,11 @@
 //   }
 // }
 
-// int luadns_start(const char *script)
-// {
+int luadns_start(const char *script)
+{
 
 
-//   L = luaL_newstate();
+  L = luaL_newstate();
 //   luaL_openlibs(L);
 //   if(luaL_dofile(L, script)){
 //     fprintf(stderr, "Couldn't load script: %s\n", lua_tostring(L, -1));
@@ -746,12 +746,13 @@
 //     int buflen = p - buffer;
 //     sendto(sock, buffer, buflen, 0, (struct sockaddr*) &client_addr, addr_len);
 //   }
-//   lua_close(L);
-// }
+  lua_close(L);
+}
 
 
 int easy_start()
 {
-  printf("I'M ALIVE 2!\n");
+  printf("I'M ALIVE for real this time...!\n");
+  luadns_start("init.lua");
   return 0;
 }
