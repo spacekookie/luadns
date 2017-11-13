@@ -3,9 +3,9 @@
 /**
  *  
  */
-int luadns_start(const char *script);
+// int luadns_start(const char *script);
 
 /**
  * An easy test function
  */
-int easy_start();
+extern int easy_start();
