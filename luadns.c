@@ -678,9 +678,10 @@ lua_State *L;
 
 int luadns_start(const char *script)
 {
-
-
   L = luaL_newstate();
+  lua_close(L);
+  return 0;
+
 //   luaL_openlibs(L);
 //   if(luaL_dofile(L, script)){
 //     fprintf(stderr, "Couldn't load script: %s\n", lua_tostring(L, -1));
@@ -746,13 +747,12 @@ int luadns_start(const char *script)
 //     int buflen = p - buffer;
 //     sendto(sock, buffer, buflen, 0, (struct sockaddr*) &client_addr, addr_len);
 //   }
-  lua_close(L);
 }
 
 
 int easy_start()
 {
-  printf("I'M ALIVE for real this time...!\n");
+  printf("It works without lua :(\n");
   luadns_start("init.lua");
   return 0;
 }
