@@ -17,8 +17,9 @@
 #include <errno.h>
 #include <string.h>
 #include <stdint.h>
+#include <unistd.h>
 
-#define BUF_SIZE 1500
+#define BUF_SIZE 2048
 
 /*
 * This software is licensed under the Public Domain.
@@ -33,6 +34,9 @@
 
 lua_State *L;
 
+/* Callback functions in rust */
+void *callbackARecord;
+void *callbackAAAARecord;
 
 /*
 * Masks and constants.
@@ -189,7 +193,7 @@ struct Message {
   struct ResourceRecord* additionals;
 };
 
-int get_A_Record(uint8_t addr[4], const char domain_name[],struct sockaddr_in* client_addr)
+int get_A_Record(uint8_t addr[4], const char domain_name[], struct sockaddr_in* client_addr)
 {
   lua_getglobal(L,"AQuery");
   lua_pushstring(L,domain_name);
@@ -206,7 +210,7 @@ int get_A_Record(uint8_t addr[4], const char domain_name[],struct sockaddr_in* c
   }
 }
 
-int get_AAAA_Record(uint8_t addr[16], const char domain_name[],struct sockaddr_in* client_addr)
+int get_AAAA_Record(uint8_t addr[16], const char domain_name[], struct sockaddr_in* client_addr)
 {
   lua_getglobal(L,"AAAAQuery");
   lua_pushstring(L,domain_name);
@@ -678,6 +682,14 @@ void free_questions(struct Question* qq)
 
 int luadns_start(const char *script)
 {
+  printf("Inside C!\n");
+
+  if(access(script, F_OK) == -1) {
+    printf("Provided script file doesn't exist!\n");
+    exit(errno);
+  }
+
+  L = luaL_newstate();
 
   luaL_openlibs(L);
   if(luaL_dofile(L, script)){
@@ -744,12 +756,4 @@ int luadns_start(const char *script)
     int buflen = p - buffer;
     sendto(sock, buffer, buflen, 0, (struct sockaddr*) &client_addr, addr_len);
   }
-}
-
-
-int easy_start()
-{
-  printf("It works without lua :(\n");
-  luadns_start("init.lua");
-  return 0;
 }
